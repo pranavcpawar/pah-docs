@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import { Header } from "@/app/header";
 import { Note } from "@/app/note";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
 	title: "PAH Parser",
@@ -43,6 +44,7 @@ export default function RootLayout({
 					</main>
 					<Note />
 				</div>
+        <Toaster position="bottom-right" richColors theme="dark" className="text-sm font-manrope font-medium" />
 			</body>
 		</html>
 	);

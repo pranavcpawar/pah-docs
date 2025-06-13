@@ -22,6 +22,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { parseCode } from "./_actions/code-parser";
+import { toast } from "sonner";
+import { Loader } from "@/components/loader";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type CodeFunction = {
 	name: string;
@@ -31,6 +34,7 @@ type CodeFunction = {
 	isRead: boolean;
 };
 export default function Home() {
+  const [loading, setLoading] = useState(false);
 	const [codeFunctions, setCodeFunctions] = useState<CodeFunction[]>([]);
 	const [readFunctions, setReadFunctions] = useState<{ name: string }[]>([]);
 	const [writeFunctions, setWriteFunctions] = useState<{ name: string }[]>([]);
@@ -46,13 +50,18 @@ export default function Home() {
 	});
 	async function onSubmit(data: Schema) {
 		try {
-			const response = await parseCode(data.code);
-			if (response) {
-				setCodeFunctions(response.codeFunctions);
-				setReadFunctions(response.ReadFunctions);
-				setWriteFunctions(response.WriteFunctions);
-			}
-			form.reset();
+      setLoading(true);
+      setTimeout(async() => {
+        const response = await parseCode(data.code);
+        if (response) {
+          setCodeFunctions(response.codeFunctions);
+          setReadFunctions(response.ReadFunctions);
+          setWriteFunctions(response.WriteFunctions);
+          setLoading(false);
+          toast.success("Code parsed successfully");
+          form.reset();
+        }
+      }, 1000);
 		} catch (error) {
 			console.error(error);
 		}
@@ -104,54 +113,71 @@ export default function Home() {
 							<p className="font-work-sans h-4 text-sm font-medium tracking-tight">
 								Number of functions used:
 							</p>
-							<p className="font-work-sans h-4 text-sm font-medium tracking-tight text-tertiary">
-								{codeFunctions.length ? codeFunctions.length : "null"}
-							</p>
+							{loading ? (
+								<Skeleton className="h-4 w-[120px]" />
+							) : (
+								<p className="font-work-sans h-4 text-sm font-medium tracking-tight text-tertiary">
+									{codeFunctions.length ? codeFunctions.length : 0}
+								</p>
+							)}
 						</div>
 						<div className="flex flex-row items-start justify-center gap-2">
 							<p className="font-work-sans h-4 text-sm font-medium tracking-tight">
 								Number of read functions used:
 							</p>
-							<p className="font-work-sans h-4 text-sm font-medium tracking-tight text-secondary">
-								{readFunctions.length ? readFunctions.length : "null"}
-							</p>
+							{loading ? (
+								<Skeleton className="h-4 w-[120px]" />
+							) : (
+								<p className="font-work-sans h-4 text-sm font-medium tracking-tight text-secondary">
+									{readFunctions.length ? readFunctions.length : 0}
+								</p>
+							)}
 						</div>
 						<div className="flex flex-row items-start justify-center gap-2">
 							<p className="font-work-sans h-4 text-sm font-medium tracking-tight">
 								Number of write functions used:
 							</p>
-							<p className="font-work-sans h-4 text-sm font-medium tracking-tight text-primary">
-								{writeFunctions.length ? writeFunctions.length : "null"}
-							</p>
+							{loading ? (
+								<Skeleton className="h-4 w-[120px]" />
+							) : (
+								<p className="font-work-sans h-4 text-sm font-medium tracking-tight text-primary">
+									{writeFunctions.length ? writeFunctions.length : 0}
+								</p>
+							)}
 						</div>
 					</div>
 				</div>
-        <div className="rounded-xl border-2 border-border w-full h-full">
-          <Table className="w-full">
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Function</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Visibility</TableHead>
-                <TableHead className="text-right">Mutability</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {codeFunctions.map((codeFunction) => (
-                <TableRow key={codeFunction.name}>
-                  <TableCell className="font-medium">
-                    {codeFunction.name}
-                  </TableCell>
-                  <TableCell>{codeFunction.isRead ? "read" : "write"}</TableCell>
-                  <TableCell>{codeFunction.visibility}</TableCell>
-                  <TableCell className="text-right">
-                    {codeFunction.mutability}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+				{loading && <Loader />}
+				{!loading && (
+					<div className="rounded-xl border-2 border-border w-full h-full">
+						<Table className="w-full">
+							<TableHeader>
+								<TableRow>
+									<TableHead className="w-[100px]">Function</TableHead>
+									<TableHead>Type</TableHead>
+									<TableHead>Visibility</TableHead>
+									<TableHead className="text-right">Mutability</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								{codeFunctions.map((codeFunction) => (
+									<TableRow key={codeFunction.name}>
+										<TableCell className="font-medium">
+											{codeFunction.name}
+										</TableCell>
+										<TableCell>
+											{codeFunction.isRead ? "read" : "write"}
+										</TableCell>
+										<TableCell>{codeFunction.visibility}</TableCell>
+										<TableCell className="text-right">
+											{codeFunction.mutability}
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</div>
+				)}
 			</div>
 		</div>
 	);
