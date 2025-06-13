@@ -9,6 +9,7 @@ import {
 } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import { Header } from "@/app/header";
 
 export const metadata: Metadata = {
 	title: "PAH Parser",
@@ -34,7 +35,7 @@ export default function RootLayout({
 				)}
 			>
 				<div className="flex min-h-dvh w-full flex-col items-center justify-between px-1 pt-1 pb-2">
-					Header
+					<Header />
 					<div className="absolute inset-0 -z-10 h-full w-full bg-[linear-gradient(to_right,#131313_1px,transparent_1px),linear-gradient(to_bottom,#131313_1px,transparent_1px)] bg-[size:2rem_2rem]" />
 					<main className="font-geist-sans flex w-full flex-1 flex-col items-center gap-2 p-2">
 						{children}
