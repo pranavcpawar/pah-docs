@@ -1,5 +1,6 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/loader";
+import { LoaderButton } from "@/components/loader-button";
 import {
 	Form,
 	FormControl,
@@ -8,6 +9,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
 	Table,
 	TableBody,
@@ -20,11 +22,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { parseCode } from "./_actions/code-parser";
-import { toast } from "sonner";
-import { Loader } from "@/components/loader";
-import { Skeleton } from "@/components/ui/skeleton";
 
 type CodeFunction = {
 	name: string;
@@ -34,7 +34,7 @@ type CodeFunction = {
 	isRead: boolean;
 };
 export default function Home() {
-  const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [codeFunctions, setCodeFunctions] = useState<CodeFunction[]>([]);
 	const [readFunctions, setReadFunctions] = useState<{ name: string }[]>([]);
 	const [writeFunctions, setWriteFunctions] = useState<{ name: string }[]>([]);
@@ -50,18 +50,18 @@ export default function Home() {
 	});
 	async function onSubmit(data: Schema) {
 		try {
-      setLoading(true);
-      setTimeout(async() => {
-        const response = await parseCode(data.code);
-        if (response) {
-          setCodeFunctions(response.codeFunctions);
-          setReadFunctions(response.ReadFunctions);
-          setWriteFunctions(response.WriteFunctions);
-          setLoading(false);
-          toast.success("Code parsed successfully");
-          form.reset();
-        }
-      }, 1000);
+			setLoading(true);
+			setTimeout(async () => {
+				const response = await parseCode(data.code);
+				if (response) {
+					setCodeFunctions(response.codeFunctions);
+					setReadFunctions(response.ReadFunctions);
+					setWriteFunctions(response.WriteFunctions);
+					setLoading(false);
+					toast.success("Code parsed successfully");
+					form.reset();
+				}
+			}, 1000);
 		} catch (error) {
 			console.error(error);
 		}
@@ -94,53 +94,53 @@ export default function Home() {
 								</FormItem>
 							)}
 						/>
-						<Button
-							className="w-full h-10 bg-[#0e76a8] text-white rounded-2xl hover:bg-[#0e76a8]/80 font-manrope text-base font-bold tracking-tight"
-							type="submit"
+						<LoaderButton
+							isLoading={loading}
+							className="w-full h-10 rounded-xl text-base font-medium font-manrope text-primary"
 						>
-							Submit
-						</Button>
+							Parse
+						</LoaderButton>
 					</form>
 				</Form>
 			</div>
 			<div className="flex flex-col items-center justify-center gap-2 md:w-1/2 w-full h-full p-3">
-				<div className="flex flex-col items-start justify-center gap-2 border-2 w-full h-full rounded-xl p-2">
+				<div className="flex flex-col items-center justify-center gap-2 border-2 w-full h-full rounded-xl p-2">
 					<h1 className="font-unbounded text-xl font-bold tracking-tight">
 						Stats
 					</h1>
 					<div className="flex flex-col items-start justify-center gap-2 w-full h-full">
-						<div className="flex flex-row items-start justify-center gap-2">
-							<p className="font-work-sans h-4 text-sm font-medium tracking-tight">
+						<div className="flex flex-row items-center justify-center gap-2">
+							<p className="font-work-sans text-base font-medium tracking-tight">
 								Number of functions used:
 							</p>
 							{loading ? (
-								<Skeleton className="h-4 w-[120px]" />
+								<Skeleton className="h-2 w-[80px]" />
 							) : (
-								<p className="font-work-sans h-4 text-sm font-medium tracking-tight text-tertiary">
+								<p className="font-work-sans text-base font-medium tracking-tight text-tertiary">
 									{codeFunctions.length ? codeFunctions.length : 0}
 								</p>
 							)}
 						</div>
-						<div className="flex flex-row items-start justify-center gap-2">
-							<p className="font-work-sans h-4 text-sm font-medium tracking-tight">
+						<div className="flex flex-row items-center justify-center gap-2">
+							<p className="font-work-sans text-base font-medium tracking-tight">
 								Number of read functions used:
 							</p>
 							{loading ? (
-								<Skeleton className="h-4 w-[120px]" />
+								<Skeleton className="h-2 w-[80px]" />
 							) : (
-								<p className="font-work-sans h-4 text-sm font-medium tracking-tight text-secondary">
+								<p className="font-work-sans text-base font-medium tracking-tight text-secondary">
 									{readFunctions.length ? readFunctions.length : 0}
 								</p>
 							)}
 						</div>
-						<div className="flex flex-row items-start justify-center gap-2">
-							<p className="font-work-sans h-4 text-sm font-medium tracking-tight">
+						<div className="flex flex-row items-center justify-center gap-2">
+							<p className="font-work-sans text-base font-medium tracking-tight">
 								Number of write functions used:
 							</p>
 							{loading ? (
-								<Skeleton className="h-4 w-[120px]" />
+								<Skeleton className="h-2 w-[80px]" />
 							) : (
-								<p className="font-work-sans h-4 text-sm font-medium tracking-tight text-primary">
+								<p className="font-work-sans text-base font-medium tracking-tight text-primary">
 									{writeFunctions.length ? writeFunctions.length : 0}
 								</p>
 							)}

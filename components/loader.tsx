@@ -12,44 +12,44 @@ export function Loader() {
 			<TableBody>
 				<TableRow>
 					<TableCell className="font-medium">
-						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-2 w-full" />
 					</TableCell>
 					<TableCell>
-						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-2 w-full" />
 					</TableCell>
 					<TableCell>
-						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-2 w-full" />
 					</TableCell>
 					<TableCell className="text-right">
-						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-2 w-full" />
 					</TableCell>
 				</TableRow>
 				<TableRow>
 					<TableCell className="font-medium">
-						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-2 w-full" />
 					</TableCell>
 					<TableCell>
-						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-2 w-full" />
 					</TableCell>
 					<TableCell>
-						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-2 w-full" />
 					</TableCell>
 					<TableCell className="text-right">
-						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-2 w-full" />
 					</TableCell>
 				</TableRow>
 				<TableRow>
 					<TableCell className="font-medium">
-						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-2 w-full" />
 					</TableCell>
 					<TableCell>
-						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-2 w-full" />
 					</TableCell>
 					<TableCell>
-						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-2 w-full" />
 					</TableCell>
 					<TableCell className="text-right">
-						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-2 w-full" />
 					</TableCell>
 				</TableRow>
 			</TableBody>
