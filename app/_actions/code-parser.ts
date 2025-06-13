@@ -3,15 +3,15 @@ import { parse, ParserError, visit } from "@solidity-parser/parser";
 
 export async function parseCode(code: string) {
 	try {
-		let codeFunctions: {
+		const codeFunctions: {
 			name: string;
 			visibility: string;
 			mutability: string;
 			type: string;
 			isRead: boolean;
 		}[] = [];
-		let ReadFunctions: { name: string }[] = [];
-		let WriteFunctions: { name: string}[] = [];
+		const ReadFunctions: { name: string }[] = [];
+		const WriteFunctions: { name: string}[] = [];
 		const ast = parse(code, {
 			loc: true,
 		});

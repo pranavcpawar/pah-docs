@@ -54,7 +54,6 @@ export default function Home() {
 			console.error(error);
 		}
 	}
-	console.log(codeFunctions);
 	return (
 		<div className="flex h-full w-full md:flex-row flex-col items-center justify-center gap-2 p-2">
 			<div className="flex flex-col items-center justify-center gap-2 w-full h-full rounded-xl p-3">
