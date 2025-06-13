@@ -10,6 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import { Header } from "@/app/header";
+import { Note } from "@/app/note";
 
 export const metadata: Metadata = {
 	title: "PAH Parser",
@@ -40,7 +41,7 @@ export default function RootLayout({
 					<main className="font-geist-sans flex w-full flex-1 flex-col items-center gap-2 p-2">
 						{children}
 					</main>
-					Note
+					<Note />
 				</div>
 			</body>
 		</html>
